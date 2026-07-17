@@ -10,3 +10,13 @@
 # script: install_remotedesktop.sh
 REMOTE_USERNAME="remoteUser"
 
+ADMIN_USERNAME="pi"
+ADMIN_PASSWORD="raspberry"
+
+PODMAN_USERNAME="podmanuser"
+PODMAN_PASSWORD="password"
+
+PIHOLE_PASSWORD="password"
+
+FTP_USERNAME="ftp-username"
+FTP_PASSWORD="password"
