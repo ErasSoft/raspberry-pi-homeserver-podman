@@ -27,8 +27,11 @@ fi
 
 lsblk -f
 
+echo "Create directories... ($JELLYFIN_CONFIG, $JELLYFIN_CACHE)"
+mkdir -p "$JELLYFIN_CONFIG" "$JELLYFIN_CACHE"
 
-podman run \
+echo "Create container..."
+podman run -d \
  --detach \
  --label "io.containers.autoupdate=registry" \
  --name jellyfin \
@@ -37,7 +40,48 @@ podman run \
  --rm \
  --user $(id -u):$(id -g) \
  --userns keep-id \
- --volume jellyfin-cache:/cache:Z \
- --volume jellyfin-config:/config:Z \
+ --volume $JELLYFIN_CONFIG:/config:Z \
+ --volume $JELLYFIN_CACHE:/cache:Z \
  --mount type=bind,source=$JELLYFIN_MOUNT_PATH,destination=/media,ro=true,relabel=private \
+ --restart=unless-stopped \
  docker.io/jellyfin/jellyfin:latest
+ 
+
+echo "Wait for configuration..."
+
+until curl -fsS \
+    "$JELLYFIN_URL/Startup/Configuration" >/dev/null; do
+    sleep 2
+done
+
+curl -fsS -X POST \
+  "$JELLYFIN_URL/Startup/Configuration" \
+  -H "Content-Type: application/json" \
+  --data '{
+    "ServerName": "$JELLYFIN_SERVER_NAME",
+    "UICulture": "de-DE",
+    "MetadataCountryCode": "DE",
+    "PreferredMetadataLanguage": "de"
+  }'
+
+curl -fsS -X POST \
+  "$JELLYFIN_URL/Startup/User" \
+  -H "Content-Type: application/json" \
+  --data "$(
+    printf '{"Name":"%s","Password":"%s"}' \
+      "$JELLYFIN_USERNAME" \
+      "$JELLYFIN_PASSWORD"
+  )"
+
+curl -fsS -X POST \
+  "$JELLYFIN_URL/Startup/RemoteAccess" \
+  -H "Content-Type: application/json" \
+  --data '{
+    "EnableRemoteAccess": true,
+    "EnableAutomaticPortMapping": false
+  }'
+
+curl -fsS -X POST \
+  "$JELLYFIN_URL/Startup/Complete"
+
+echo "Finish jellyfin config..."
