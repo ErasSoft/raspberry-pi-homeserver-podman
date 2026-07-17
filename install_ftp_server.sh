@@ -21,11 +21,11 @@ mkdir -p "$FTP_BASE"
 echo "Create container..."
 podman run -d \
     --name ftpUser \
-	--network host \
 	--env FTP_USER=$FTP_USERNAME \
 	--env FTP_PASS=$FTP_PASSWORD \
 	--publish 20-21:20-21/tcp \
     --publish 40000-40009:40000-40009/tcp \
 	-v $FTP_BASE:/home/$FTP_USERNAME \
 	--restart=unless-stopped \
+	--network homeserver \
 	docker.io/garethflowers/ftp-server
