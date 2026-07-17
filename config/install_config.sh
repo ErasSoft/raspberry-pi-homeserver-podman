@@ -23,6 +23,7 @@ PIHOLE_PASSWORD="password"
 PIHOLE_PORT="8081"
 
 # script: install_ftp_server.sh
+FTP_BASE="/home/$PODMAN_USERNAME/ftp"
 FTP_USERNAME="ftpUser"
 FTP_PASSWORD="password"
 

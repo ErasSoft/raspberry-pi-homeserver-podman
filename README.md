@@ -22,12 +22,12 @@ sudo ./install_raspberry_pi_connect.sh
 sudo ./install_podman.sh
 
 ### start as podmanuser
-sudo ./install_podman2.sh
-sudo ./install_pihole.sh
-sudo ./install_ftp_server.sh
-sudo ./install_jellyfin.sh
+./install_podman2.sh
+./install_pihole.sh
+./install_ftp_server.sh
+./install_jellyfin.sh
 
-sudo ./install_restart_cronjob.sh
+./install_restart_cronjob.sh
 
 
 ## Podman commands:

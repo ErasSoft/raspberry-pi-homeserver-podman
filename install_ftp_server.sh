@@ -15,10 +15,17 @@ if [ "$(id -u)" -ne "$(id -u $PODMAN_USERNAME)" ]; then
     exit 1
 fi
 
+echo "Create directory... ($FTP_BASE)"
+mkdir -p "$FTP_BASE"
+
+echo "Create container..."
 podman run -d \
-    --name $FTP_USERNAME \
+    --name ftpUser \
 	--network host \
-	--env FTP_USER=$FTP_PASSWORD \
+	--env FTP_USER=$FTP_USERNAME \
 	--env FTP_PASS=$FTP_PASSWORD \
-	-v /home/$PODMAN_USERNAME/ftp:/home/$FTP_USERNAME \
+	--publish 20-21:20-21/tcp \
+    --publish 40000-40009:40000-40009/tcp \
+	-v $FTP_BASE:/home/$FTP_USERNAME \
+	--restart=unless-stopped \
 	docker.io/garethflowers/ftp-server

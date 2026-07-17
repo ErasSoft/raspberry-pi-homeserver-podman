@@ -27,8 +27,9 @@ sudo chsh -s /bin/bash $PODMAN_USERNAME
 # change password of podmanuser
 echo "$PODMAN_USERNAME:$PODMAN_PASSWORD" | sudo chpasswd
 
+# set minimum port to 20 - needed for ftpServer!
 # set minimum port to 53 - needed for pihole!
-grep -qxF "net.ipv4.ip_unprivileged_port_start=53" /etc/sysctl.conf || echo "net.ipv4.ip_unprivileged_port_start=53" | sudo tee -a /etc/sysctl.conf
+grep -qxF "net.ipv4.ip_unprivileged_port_start=20" /etc/sysctl.conf || echo "net.ipv4.ip_unprivileged_port_start=20" | sudo tee -a /etc/sysctl.conf
 sudo sysctl -p
 
 # enable start after reboot host
