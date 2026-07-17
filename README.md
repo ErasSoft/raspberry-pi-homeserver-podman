@@ -1,5 +1,14 @@
 # raspberry-pi-homeserver-podman
 
+## Download:
+
+`git clone https://github.com/ErasSoft/raspberry-pi-homeserver-podman`
+
+`cd raspberry-pi-homeserver-podman`
+
+`chmod +x . -R`
+
+
 
 ## Config:
 
@@ -9,9 +18,9 @@ Change config in folder config!
 ## Install:
 
 
-./install_remotedesktop.sh
-./install_raspberry_pi_connect.sh
-./install_podman.sh
+sudo ./install_remotedesktop.sh
+sudo ./install_raspberry_pi_connect.sh
+sudo ./install_podman.sh
 
 
 

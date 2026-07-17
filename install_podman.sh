@@ -25,18 +25,17 @@ sudo usermod --add-subuids 100000-165535 --add-subgids 100000-165535 $PODMAN_USE
 # change shell of podmanuser
 sudo chsh -s /bin/bash $PODMAN_USERNAME
 # change password of podmanuser
-echo "$PODMAN_USERNAME:$PODMAN_USERNAME" | sudo chpasswd
+echo "$PODMAN_USERNAME:$PODMAN_PASSWORD" | sudo chpasswd
 
 # enable start after reboot host
 loginctl enable-linger $PODMAN_USERNAME
 systemctl --user enable --now podman-restart.service
 systemctl --user status podman-restart.service
 
-
 ### not allow ssh connection
-DONT_ALLOW_SSH_COMMAND="DenyUsers ${$PODMAN_USERNAME}"
+DONT_ALLOW_SSH_COMMAND="DenyUsers $PODMAN_USERNAME"
 grep -qxF $DONT_ALLOW_SSH_COMMAND /etc/ssh/sshd_config || echo $DONT_ALLOW_SSH_COMMAND | sudo tee -a /etc/ssh/sshd_config
-sudo systemctl restart ssh.service
+sudo sshd -t && sudo systemctl restart ssh.service
 
 ### use podman user
 sudo su - $PODMAN_USERNAME

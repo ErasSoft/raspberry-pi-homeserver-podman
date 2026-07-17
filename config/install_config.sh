@@ -9,6 +9,7 @@
 # Username of Remotedesktop
 # script: install_remotedesktop.sh
 REMOTE_USERNAME="remoteUser"
+REMOTE_PASSWORD="password"
 
 ADMIN_USERNAME="pi"
 ADMIN_PASSWORD="raspberry"
