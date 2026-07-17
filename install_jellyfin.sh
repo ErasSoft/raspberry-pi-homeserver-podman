@@ -15,6 +15,20 @@ if [ "$(id -u)" -ne "$(id -u $PODMAN_USERNAME)" ]; then
     exit 1
 fi
 
+lsblk -f
+
+USB_PATH="$(
+    lsblk -nrpo NAME,TRAN |
+    awk '$2=="usb"{print $1}' |
+    while read -r dev; do
+        lsblk -nrpo MOUNTPOINTS "$dev"
+    done |
+    sed '/^$/d' |
+    head -n 1
+)"
+
+echo "$USB_PATH"
+
 podman run \
  --detach \
  --label "io.containers.autoupdate=registry" \
@@ -26,5 +40,5 @@ podman run \
  --userns keep-id \
  --volume jellyfin-cache:/cache:Z \
  --volume jellyfin-config:/config:Z \
- --mount type=bind,source=/path/to/media,destination=/media,ro=true,relabel=private \
+ --mount type=bind,source=$USB_PATH,destination=/media,ro=true,relabel=private \
  docker.io/jellyfin/jellyfin:latest
