@@ -38,5 +38,8 @@ JELLYFIN_PASSWORD="password"
 
 JELLYFIN_SERVER_NAME="Jellyfin - Raspberry Pi"
 
+# Login -> Administration -> Dashboard -> Advanced -> API-Key
+JELLYFIN_API_KEY=""
+
 # script: install_homepage.sh
 HOMEPAGE_BASE="/home/$PODMAN_USERNAME/homepage"

@@ -26,4 +26,6 @@ podman run -d \
     -v pihole_data:/etc/pihole \
     -v dnsmasq_data:/etc/dnsmasq.d \
     --restart=unless-stopped \
+	--network homeserver \
+	--volume "/run/user/$(id -u)/podman/podman.sock:/var/run/docker.sock" \
     docker.io/pihole/pihole:latest

@@ -34,8 +34,9 @@ START_PODS_SCRIPT="/home/${PODMAN_USERNAME}/start_pods.sh"
     echo 'fi'
     echo
     echo 'podman start pihole'
-    echo 'podman start ftpUser'
     echo 'podman start jellyfin'
+	echo 'podman start ftpUser'
+	echo 'podman start homepage'
 } > "$START_PODS_SCRIPT"
 
 chmod 750 "$START_PODS_SCRIPT"

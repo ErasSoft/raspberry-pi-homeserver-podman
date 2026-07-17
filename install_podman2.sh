@@ -23,3 +23,7 @@ cp -r /etc/cni/net.d/* /home/$PODMAN_USERNAME/.config/cni/net.d/
 mkdir -p ~/.bashrc.d
 echo "export XDG_RUNTIME_DIR=/run/user/$(id -u)" > ~/.bashrc.d/systemd 
 source ~/.bashrc.d/systemd
+
+## infos about podman containers
+systemctl --user enable --now podman.socket
+ls -l "/run/user/$(id -u)/podman/podman.sock"

@@ -26,5 +26,6 @@ podman run -d \
     --env "HOMEPAGE_ALLOWED_HOSTS=*" \
     --volume "$HOMEPAGE_BASE:/app/config" \
     --restart=unless-stopped \
+	--network homeserver \
+    --volume "/run/user/$(id -u)/podman/podman.sock:/var/run/docker.sock" \
     ghcr.io/gethomepage/homepage:latest
-	

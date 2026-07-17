@@ -42,6 +42,8 @@ podman run -d \
  --volume $JELLYFIN_CACHE:/cache:Z \
  --mount type=bind,source=$JELLYFIN_MOUNT_PATH,destination=/media,ro=true,relabel=private \
  --restart=unless-stopped \
+ --network homeserver \
+ --volume "/run/user/$(id -u)/podman/podman.sock:/var/run/docker.sock" \
  docker.io/jellyfin/jellyfin:latest
 
 echo "Start in browser: $JELLYFIN_URL"
