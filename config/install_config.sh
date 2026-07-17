@@ -6,9 +6,6 @@
 # date: 17.07.2026
 
 
-ADMIN_USERNAME="pi"
-ADMIN_PASSWORD="raspberry"
-
 # Username of Remotedesktop
 # script: install_remotedesktop.sh
 REMOTE_USERNAME="remoteUser"
@@ -40,3 +37,6 @@ JELLYFIN_USERNAME="jellyfinUser"
 JELLYFIN_PASSWORD="password"
 
 JELLYFIN_SERVER_NAME="Jellyfin - Raspberry Pi"
+
+# script: install_homepage.sh
+HOMEPAGE_BASE="/home/$PODMAN_USERNAME/homepage"

@@ -18,9 +18,9 @@ fi
 # install packages
 sudo apt-get install xrdp
 
-# create user to login via remotedesktop
-sudo adduser $REMOTE_USERNAME
-sudo usermod -aG sudo $REMOTE_USERNAME
+# # create user to login via remotedesktop
+# sudo adduser $REMOTE_USERNAME
+# sudo usermod -aG sudo $REMOTE_USERNAME
 
-# change password of remote user
-echo "$REMOTE_USERNAME:$REMOTE_PASSWORD" | sudo chpasswd
+# # change password of remote user
+# echo "$REMOTE_USERNAME:$REMOTE_PASSWORD" | sudo chpasswd
