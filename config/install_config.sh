@@ -18,6 +18,9 @@ PODMAN_USERNAME="podmanuser"
 PODMAN_PASSWORD="password"
 
 PIHOLE_PASSWORD="password"
+PIHOLE_PORT="8081"
 
-FTP_USERNAME="ftp-username"
+FTP_USERNAME="ftpUser"
 FTP_PASSWORD="password"
+
+JELLYFIN_PORT="8899"

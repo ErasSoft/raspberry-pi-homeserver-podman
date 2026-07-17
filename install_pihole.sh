@@ -21,7 +21,7 @@ podman run -d \
     -e FTLCONF_webserver_api_password="$PIHOLE_PASSWORD" \
     -e FTLCONF_dns_upstreams="8.8.8.8;8.8.4.4" \
     -p 53:53/tcp -p 53:53/udp \
-    -p 80:80 \
+    -p $PIHOLE_PORT:80 \
     -p 443:443 \
     -v pihole_data:/etc/pihole \
     -v dnsmasq_data:/etc/dnsmasq.d \
