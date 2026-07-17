@@ -15,7 +15,6 @@
 # sudo mount -a
 
 
-
 # load config
 source ./config/install_config.sh
 
@@ -37,7 +36,6 @@ podman run -d \
  --name jellyfin \
  --publish $JELLYFIN_PORT:8096/tcp \
  --publish 7359:7359/udp \
- --rm \
  --user $(id -u):$(id -g) \
  --userns keep-id \
  --volume $JELLYFIN_CONFIG:/config:Z \
@@ -45,43 +43,5 @@ podman run -d \
  --mount type=bind,source=$JELLYFIN_MOUNT_PATH,destination=/media,ro=true,relabel=private \
  --restart=unless-stopped \
  docker.io/jellyfin/jellyfin:latest
- 
 
-echo "Wait for configuration..."
-
-until curl -fsS \
-    "$JELLYFIN_URL/Startup/Configuration" >/dev/null; do
-    sleep 2
-done
-
-curl -fsS -X POST \
-  "$JELLYFIN_URL/Startup/Configuration" \
-  -H "Content-Type: application/json" \
-  --data '{
-    "ServerName": "$JELLYFIN_SERVER_NAME",
-    "UICulture": "de-DE",
-    "MetadataCountryCode": "DE",
-    "PreferredMetadataLanguage": "de"
-  }'
-
-curl -fsS -X POST \
-  "$JELLYFIN_URL/Startup/User" \
-  -H "Content-Type: application/json" \
-  --data "$(
-    printf '{"Name":"%s","Password":"%s"}' \
-      "$JELLYFIN_USERNAME" \
-      "$JELLYFIN_PASSWORD"
-  )"
-
-curl -fsS -X POST \
-  "$JELLYFIN_URL/Startup/RemoteAccess" \
-  -H "Content-Type: application/json" \
-  --data '{
-    "EnableRemoteAccess": true,
-    "EnableAutomaticPortMapping": false
-  }'
-
-curl -fsS -X POST \
-  "$JELLYFIN_URL/Startup/Complete"
-
-echo "Finish jellyfin config..."
+echo "Start in browser: $JELLYFIN_URL"

@@ -27,6 +27,8 @@ sudo ./install_pihole.sh
 sudo ./install_ftp_server.sh
 sudo ./install_jellyfin.sh
 
+sudo ./install_restart_cronjob.sh
+
 
 ## Podman commands:
 
