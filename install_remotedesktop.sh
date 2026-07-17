@@ -6,14 +6,14 @@
 # date: 17.07.2026
 
 
+# load config
+source ./config/install_config.sh
+
 # start as root!
 if [ $(id -u) -ne 0 ]; then
   echo "ERR: This script must be run as root."
   exit 1
 fi
-
-# load config
-source ./config/install_config.sh
 
 # install packages
 sudo apt-get install xrdp

@@ -21,6 +21,7 @@ Change config in folder config!
 sudo ./install_remotedesktop.sh
 sudo ./install_raspberry_pi_connect.sh
 sudo ./install_podman.sh
+sudo ./install_podman2.sh
 
 
 
