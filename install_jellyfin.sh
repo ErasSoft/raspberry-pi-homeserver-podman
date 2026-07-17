@@ -5,6 +5,16 @@
 # author: Tino Schuldt
 # date: 17.07.2026
 
+# steps before start script:
+# unmont usb disk
+# sudo mkdir -p /mnt/intenso
+# id podmanuser
+# sudo nano /etc/fstab
+# UUID=<UUID> /mnt/intenso vfat defaults,nofail,x-systemd.automount,uid=1002,gid=1002,dmask=0022,fmask=0133 0 0
+# sudo systemctl daemon-reload
+# sudo mount -a
+
+
 
 # load config
 source ./config/install_config.sh
@@ -17,17 +27,6 @@ fi
 
 lsblk -f
 
-USB_PATH="$(
-    lsblk -nrpo NAME,TRAN |
-    awk '$2=="usb"{print $1}' |
-    while read -r dev; do
-        lsblk -nrpo MOUNTPOINTS "$dev"
-    done |
-    sed '/^$/d' |
-    head -n 1
-)"
-
-echo "$USB_PATH"
 
 podman run \
  --detach \
@@ -40,5 +39,5 @@ podman run \
  --userns keep-id \
  --volume jellyfin-cache:/cache:Z \
  --volume jellyfin-config:/config:Z \
- --mount type=bind,source=$USB_PATH,destination=/media,ro=true,relabel=private \
+ --mount type=bind,source=$JELLYFIN_MOUNT_PATH,destination=/media,ro=true,relabel=private \
  docker.io/jellyfin/jellyfin:latest
