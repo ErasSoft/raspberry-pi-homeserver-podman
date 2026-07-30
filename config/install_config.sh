@@ -6,6 +6,14 @@
 # date: 17.07.2026
 
 
+# Username of root
+# script: install_init.sh
+ROOT_PASSWORD="password"
+
+# Username of standard user
+# script: install_init.sh
+USER_USERNAME="username"
+
 # Username of Remotedesktop
 # script: install_remotedesktop.sh
 REMOTE_USERNAME="remoteUser"

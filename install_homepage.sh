@@ -9,11 +9,12 @@
 # load config
 source ./config/install_config.sh
 
-# start as podmanuser
-if [ "$(id -un)" != "$PODMAN_USERNAME" ]; then
-    echo "ERR: Run as $PODMAN_USERNAME"
+# start as podmanuser!
+if [ "$(id -u)" -ne "$(id -u $PODMAN_USERNAME)" ]; then
+    echo "ERR: This script must be executed as $PODMAN_USERNAME! Use the command: su - $PODMAN_USERNAME"
     exit 1
 fi
+
 
 echo "Create directory... ($HOMEPAGE_BASE)"
 mkdir -p "$HOMEPAGE_BASE"

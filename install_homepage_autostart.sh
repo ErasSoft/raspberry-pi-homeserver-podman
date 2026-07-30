@@ -17,9 +17,9 @@ fi
 
 mkdir -p ~/.config/labwc
 
-grep -qxF '(sleep 10; firefox --kiosk http://localhost) &' \
+grep -qxF '(sleep 300; firefox --kiosk http://localhost) &' \
     ~/.config/labwc/autostart 2>/dev/null ||
-echo '(sleep 10; firefox --kiosk http://localhost) &' \
+echo '(sleep 300; firefox --kiosk http://localhost) &' \
     >> ~/.config/labwc/autostart
 
 chmod +x ~/.config/labwc/autostart

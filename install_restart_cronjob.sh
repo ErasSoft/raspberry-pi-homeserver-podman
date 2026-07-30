@@ -11,35 +11,32 @@ source ./config/install_config.sh
 
 # start as podmanuser!
 if [ "$(id -u)" -ne "$(id -u $PODMAN_USERNAME)" ]; then
-    echo "ERR: This script must be executed as $PODMAN_USERNAME! Use the command: su $PODMAN_USERNAME"
+    echo "ERR: This script must be executed as $PODMAN_USERNAME! Use the command: su - $PODMAN_USERNAME"
     exit 1
 fi
 
-REBOOT_CRONJOB_COMMAND="@reboot /home/$PODMAN_USERNAME/start_pods.sh"
-(crontab -l 2>/dev/null; echo $REBOOT_CRONJOB_COMMAND) | crontab -
-
-START_PODS_SCRIPT="/home/${PODMAN_USERNAME}/start_pods.sh"
+mkdir -p ~/.config/systemd/user
+nano ~/.config/systemd/user/start-pods.service
 
 {
-    echo '#!/usr/bin/env bash'
+    echo '[Unit]'
+    echo 'Description=Rootless Podman-Container starten'
     echo
-    echo 'set -e'
+    echo '[Service]'
+    echo 'Type=oneshot'
+    echo 'ExecStart=/bin/bash /home/podmanuser/start_pods.sh'
+    echo 'RemainAfterExit=yes'
+    echo 'Restart=on-failure'
+    echo 'RestartSec=10'
     echo
-    echo "PODMAN_USERNAME=\"${PODMAN_USERNAME}\""
-    echo
-    echo 'if [ "$(id -u)" -ne "$(id -u "$PODMAN_USERNAME")" ]; then'
-    echo '    echo "ERR: This script must be executed as $PODMAN_USERNAME!"'
-    echo '    echo "Use: sudo -iu $PODMAN_USERNAME"'
-    echo '    exit 1'
-    echo 'fi'
-    echo
-    echo 'podman start pihole'
-    echo 'podman start jellyfin'
-	echo 'podman start ftpUser'
-	echo 'podman start homepage'
+    echo '[Install]'
+    echo 'WantedBy=default.target'
 } > "$START_PODS_SCRIPT"
 
-chmod 750 "$START_PODS_SCRIPT"
-chown "$PODMAN_USERNAME:$PODMAN_USERNAME" "$START_PODS_SCRIPT"
+
+systemctl --user daemon-reload
+systemctl --user enable --now start-pods.service
+
+systemctl --user status start-pods.service --no-pager
 
 echo "Created: $START_PODS_SCRIPT"

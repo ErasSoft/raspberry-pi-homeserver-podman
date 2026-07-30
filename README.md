@@ -26,8 +26,12 @@ sudo ./install_podman.sh
 ./install_pihole.sh
 ./install_ftp_server.sh
 ./install_jellyfin.sh
+./install_homepage.sh
 
 ./install_restart_cronjob.sh
+
+### start as root
+sudo ./install_security.sh
 
 
 ## Podman commands:

@@ -33,7 +33,7 @@ grep -qxF "net.ipv4.ip_unprivileged_port_start=20" /etc/sysctl.conf || echo "net
 sudo sysctl -p
 
 # enable start after reboot host
-loginctl enable-linger $PODMAN_USERNAME
+sudo loginctl enable-linger $PODMAN_USERNAME
 systemctl --user enable --now podman-restart.service
 systemctl --user status podman-restart.service
 
@@ -43,4 +43,4 @@ grep -qxF "$DONT_ALLOW_SSH_COMMAND" /etc/ssh/sshd_config || echo "$DONT_ALLOW_SS
 sudo sshd -t && sudo systemctl restart ssh.service
 
 ### use podman user
-echo "Login with $PODMAN_USERNAME and start the next script! Use the command: su $PODMAN_USERNAME"
+echo "Login with $PODMAN_USERNAME and start the next script! Use the command: su - $PODMAN_USERNAME"
